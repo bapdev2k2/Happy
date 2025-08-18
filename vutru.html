@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vũ trụ cho Em</title>
+  <link rel="stylesheet" href="./style.css"><!-- nếu bạn có -->
+  <style>
+    :root{
+      --intro-bg: rgba(0,0,0,0.35);
+      --intro-w: clamp(280px, 80vw, 680px);
+      --intro-pad: 20px;
+      --fade-ms: 800ms;
+    }
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      overflow:hidden;
+      background:#000; /* nền đen khi chưa bật alpha */
+     font-family:cursive;
+    }
+    /* Lớp bắt đầu: chỉ hiển thị intro */
+    .stage-intro #webgl{opacity:0; pointer-events:none}
+    .stage-intro #intro{opacity:1}
+    /* Khi chuyển qua vũ trụ */
+    .stage-galaxy #webgl{opacity:1}
+    .stage-galaxy #intro{opacity:0; pointer-events:none}
+
+    /* Canvas WebGL phủ toàn màn hình, dưới intro */
+    #webgl{
+      position:fixed; inset:0;
+      z-index:0;
+      transition:opacity var(--fade-ms) ease;
+      opacity:0;
+    }
+    /* Intro box giữa màn hình, trên cùng */
+    #intro{
+      position:fixed;
+      inset:0;
+      display:grid;
+      place-items:center;
+      z-index:2;
+      transition:opacity var(--fade-ms) ease;
+    }
+    .intro-box{
+      width:var(--intro-w);
+      padding:var(--intro-pad);
+      border-radius:16px;
+      background:var(--intro-bg);
+      backdrop-filter: blur(4px);
+      color:#fff;
+      text-align:center;
+    }
+    .intro-box h1{
+      margin:0 0 12px;
+      font-size:clamp(28px, 5vw, 40px);
+      color:#ff69b4;
+      letter-spacing:0.5px;
+    }
+    .intro-box p{
+      margin:8px 0;
+      font-size:clamp(16px, 2.4vw, 20px);
+      line-height:1.6;
+      opacity:0;
+      transform:translateY(8px);
+    }
+    /* hiệu ứng gõ/hiện từng dòng */
+    .intro-box p.show{
+      animation: lineIn 2000ms ease forwards;
+    }
+    @keyframes lineIn{
+      to{opacity:1; transform:translateY(0)}
+    }
+    /* nền hồng tim nhạt sau chữ (tùy thích) */
+    .bg_heart{
+      position:fixed; inset:0;
+      z-index:1; pointer-events:none;
+      background:
+        radial-gradient(80vmax 80vmax at 50% 10%, rgba(255,105,180,0.08), transparent 60%),
+        radial-gradient(60vmax 60vmax at 10% 90%, rgba(135,206,235,0.08), transparent 60%);
+      mix-blend-mode:screen;
+    }
+  </style>
+</head>
+<!-- <audio id="bgmusic" preload="auto" playsinline loop>
+  <source src="./happybirthday.mp3" type="audio/mpeg" />
+</audio>
+<script>
+  (function(){
+    const audio = document.getElementById('bgmusic');
+    let audioUnlocked = false;
+
+    function fadeInAudio(targetVol = 0.6, step = 0.05, everyMs = 120) {
+      try { audio.muted = false; audio.volume = 0; } catch(e){}
+      const iv = setInterval(()=>{
+        try{
+          if (audio.volume + step >= targetVol) { audio.volume = targetVol; clearInterval(iv); }
+          else { audio.volume = Math.min(1, audio.volume + step); }
+        } catch(e){ clearInterval(iv); }
+      }, everyMs);
+    }
+
+    async function tryPlayAudio(){
+      if (!audio) return;
+      try{
+        audio.muted = false;
+        await audio.play();
+        audioUnlocked = true;
+        fadeInAudio(resume?.vol ?? 0.6);
+      }catch(e){ audioUnlocked = false; }
+    }
+
+    function attachOneTimeUnlock(){
+      const once = async()=>{ if (!audioUnlocked) await tryPlayAudio(); };
+      window.addEventListener('pointerdown', once, { once:true });
+      window.addEventListener('keydown', once, { once:true });
+    }
+
+    // Lấy state từ trang trước và resume
+    let resume = null;
+    try { resume = JSON.parse(localStorage.getItem('bgm_state')||'null'); } catch(e){}
+    if (resume && typeof resume.t === 'number') {
+      // Nhảy tới vị trí gần liền mạch, đẩy thêm 0.2s cho tự nhiên
+      audio.currentTime = Math.max(0, resume.t + 0.2);
+      audio.volume = (typeof resume.vol === 'number') ? resume.vol : 0.6;
+    } else {
+      audio.volume = 0.6;
+    }
+
+    // Tự phát + fallback mở khóa
+    tryPlayAudio();
+    attachOneTimeUnlock();
+  })();
+</script> -->
+
+<body class="stage-intro">
+  <!-- WebGL canvas sẽ gắn vào đây -->
+  <div id="webgl"></div>
+
+  <!-- Intro text -->
+  <div id="intro">
+    <div class="intro-box">
+      <h1>Chào em!</h1>
+      <p data-line>Đây là món quà nhỏ anh dành tặng em.</p>
+      <p data-line>Mong em luôn vui vẻ và hạnh phúc.</p>
+      <p data-line>Hãy để anh đưa em đi dạo giữa ngân hà nhé.</p>
+    </div>
+    <div class="bg_heart" aria-hidden="true"></div>
+  </div>
+
+  <script type="module">
+    import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
+    import { OrbitControls } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
+
+    // ====== PHẦN INTRO: hiện từng dòng rồi chuyển cảnh ======
+    const body = document.body;
+    const intro = document.getElementById('intro');
+    const lines = [...intro.querySelectorAll('[data-line]')];
+
+    // hiện tuần tự từng dòng
+    const showLinesSequential = async (delayBetween = 2000) => {
+      for (let i=0;i<lines.length;i++){
+        const p = lines[i];
+        p.classList.add('show');
+        await new Promise(r=>setTimeout(r, delayBetween));
+      }
+    };
+
+    // ====== THREE.JS SCENE ======
+    const webglHost = document.getElementById('webgl');
+    const scene = new THREE.Scene();
+    scene.background = null; // alpha trong suốt; nền do CSS quyết định
+
+    const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+    camera.position.set(0,4,21);
+
+    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.setSize(innerWidth, innerHeight);
+    webglHost.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const key = new THREE.PointLight(0xffffff, 1.25, 200);
+    key.position.set(10,10,12);
+    scene.add(key);
+
+    // Galaxy points
+    const gu = { time: { value: 0 } };
+    const sizes = [];
+    const shift = [];
+    const pushShift = () => {
+      shift.push(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI * 2,
+        (Math.random() * 0.9 + 0.1) * Math.PI * 0.1,
+        Math.random() * 0.9 + 0.1
+      );
+    };
+
+    const pts = new Array(25000).fill().map(() => {
+      sizes.push(Math.random()*1.5+0.5);
+      pushShift();
+      return new THREE.Vector3().randomDirection().multiplyScalar(Math.random()*0.5+9.5);
+    });
+    for(let i=0;i<50000;i++){
+      const r=10, R=40;
+      const rand = Math.pow(Math.random(),1.5);
+      const radius = Math.sqrt(R*R*rand + (1-rand)*r*r);
+      pts.push(new THREE.Vector3().setFromCylindricalCoords(radius, Math.random()*Math.PI*2, (Math.random()-0.5)*2));
+      sizes.push(Math.random()*1.5+0.5);
+      pushShift();
+    }
+
+    const g = new THREE.BufferGeometry().setFromPoints(pts);
+    g.setAttribute("sizes", new THREE.Float32BufferAttribute(sizes, 1));
+    g.setAttribute("shift", new THREE.Float32BufferAttribute(shift, 4));
+
+    const m = new THREE.PointsMaterial({
+      size: 0.2,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      opacity: 0.85,
+      onBeforeCompile: (shader)=>{
+        shader.uniforms.time = gu.time;
+        shader.vertexShader = `
+          uniform float time;
+          attribute float sizes;
+          attribute vec4 shift;
+          varying vec3 vColor;
+          ${shader.vertexShader}
+        `.replace(
+          `gl_PointSize = size;`,
+          `gl_PointSize = size * sizes;`
+        ).replace(
+          `#include <color_vertex>`,
+          `#include <color_vertex>
+           float d = length(abs(position) / vec3(40., 10., 40.));
+           d = clamp(d, 0., 1.);
+           vColor = mix(vec3(227.,155.,0.), vec3(100.,50.,255.), d) / 255.;
+          `
+        ).replace(
+          `#include <begin_vertex>`,
+          `#include <begin_vertex>
+           float t = time;
+           float moveT = mod(shift.x + shift.z * t, 6.28318530718);
+           float moveS = mod(shift.y + shift.z * t, 6.28318530718);
+           transformed += vec3(cos(moveS) * sin(moveT), cos(moveT), sin(moveS) * sin(moveT)) * shift.a;
+          `
+        );
+        shader.fragmentShader = `
+          varying vec3 vColor;
+          ${shader.fragmentShader}
+        `.replace(
+          `#include <clipping_planes_fragment>`,
+          `#include <clipping_planes_fragment>
+           float d = length(gl_PointCoord.xy - 0.5);
+           if (d > 0.5) discard;
+          `
+        ).replace(
+          `vec4 diffuseColor = vec4( diffuse, opacity );`,
+          `vec4 diffuseColor = vec4( vColor, smoothstep(0.5, 0.2, d) * 0.5 + 0.5 );`
+        );
+      }
+    });
+    const galaxy = new THREE.Points(g, m);
+    galaxy.rotation.order = "ZYX";
+    galaxy.rotation.z = 0.2;
+    scene.add(galaxy);
+
+    // Ảnh giữa (cắt tròn)
+    const planeSize = 6;
+    const circleGeom = new THREE.PlaneGeometry(1,1);
+    const circleMat = new THREE.ShaderMaterial({
+      uniforms: { mapTex: { value: null } },
+      transparent: true,
+      depthTest: true,
+      vertexShader: `
+        varying vec2 vUv;
+        void main(){
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D mapTex;
+        varying vec2 vUv;
+        void main(){
+          vec2 uv = vUv;
+          float d = distance(uv, vec2(0.5));
+          if (d > 0.5) discard;
+          vec4 c = texture2D(mapTex, uv);
+          gl_FragColor = c;
+        }
+      `
+    });
+    const photo = new THREE.Mesh(circleGeom, circleMat);
+    photo.scale.set(planeSize, planeSize, 1);
+    photo.position.set(0,0,0.12);
+    photo.renderOrder = 2;
+    scene.add(photo);
+
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      "./em2.jpg",
+      (tex)=>{
+        tex.minFilter = THREE.LinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        circleMat.uniforms.mapTex.value = tex;
+        circleMat.needsUpdate = true;
+      },
+      undefined,
+      (err)=>console.warn("Không load được em.jpg:", err)
+    );
+
+    // Resize
+    addEventListener("resize", ()=>{
+      camera.aspect = innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+
+    const clock = new THREE.Clock();
+    let startTime = clock.getElapsedTime();
+    let introZoomDone = false;
+
+    function animate(){
+      const tnow = clock.getElapsedTime();
+      const elapsed = tnow - startTime;
+
+      // Zoom-in nhẹ lúc mới hiện vũ trụ (2s đầu sau chuyển cảnh)
+      if (!introZoomDone && elapsed < 2){
+        const k = elapsed / 2;
+        const progress = Math.min(1, k);
+        galaxy.scale.set(progress, progress, progress);
+        photo.scale.set(planeSize*progress, planeSize*progress, 1);
+        if (progress >= 1) introZoomDone = true;
+      }
+
+      controls.update();
+      gu.time.value = tnow * Math.PI * 0.5;
+      galaxy.rotation.y = tnow * 0.05;
+      // Ảnh luôn nhìn camera
+      photo.quaternion.copy(camera.quaternion);
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    // Chuỗi thời gian: hiện dòng → chuyển cảnh → chạy vũ trụ
+    (async ()=>{
+      // 1) Hiện từng dòng
+      await showLinesSequential(900);
+      // Thêm chút nấn ná trước khi chuyển
+      await new Promise(r=>setTimeout(r, 800));
+
+      // 2) Chuyển cảnh: intro fade-out, webgl fade-in
+      body.classList.remove('stage-intro');
+      body.classList.add('stage-galaxy');
+
+      // Cho transition CSS chạy xong
+      await new Promise(r=>setTimeout(r, 500));
+      // 3) Bắt đầu animate
+      startTime = clock.getElapsedTime();
+      animate();
+    })();
+  </script>
+</body>
+</html>

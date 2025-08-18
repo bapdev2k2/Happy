@@ -1,659 +1,436 @@
-
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cuoi len di</title>
-        <link rel="Shortcut Icon" href="./teu.jpg" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <!--<meta itemprop="image" content="./images/fenxiang.png" />-->
-        <style>
-            html {
-                height: 100%;
-            }
-            body {
-                font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
-                background: #79a8ae;
-                color: #CFEBE4;
-                font-size: 18px;
-                line-height: 2;
-                letter-spacing: 1.2px;
-                margin: 0;
-            }
-            a {
-                color: #ebf7f4;
-            }
-            .body--ready {
-                background: -webkit-linear-gradient(top, rgb(245, 222, 238) 0%, rgb(235, 89, 210) 120%);
-                background: -moz-linear-gradient(top, rgb(245, 222, 238) 0%, rgb(235, 89, 210) 120%);
-                background: -o-linear-gradient(top, rgb(245, 222, 238) 0%, rgb(235, 89, 210) 120%);
-                background: -ms-linear-gradient(top, rgb(245, 222, 238) 0%, rgb(235, 89, 210) 120%);
-                background: linear-gradient(top, rgb(245, 222, 238) 0%, rgb(235, 89, 210) 120%);
-            }
-            .text {
-                position: fixed;
-                bottom: 100px;
-                text-align: center;
-                width: 100%;
-            }
-            .canvas {
-                margin: 0 auto;
-                display: block;
-            }
-            img#logo {
-                width: 128px;
-                background-size: cover;
-                border-radius: 200px;
-                box-shadow: 0px 0px 40px rgba(63, 81, 181, 0.72);
-                border: 3px solid #00a0ff;
-                opacity: 1;
-                margin: 0 auto;
-                margin-top: 20px;
-                margin-bottom: 20px;
-                transition: all 1.0s;
-            }
-            #logo:hover {
-                box-shadow: 0 0 10px #fff;
-                -webkit-box-shadow: 0 0 19px #fff;
-                transform: rotate(360deg);
-                -ms-transform: rotate(360deg); /* IE 9 */
-                -moz-transform: rotate(360deg); /* Firefox */
-                -webkit-transform: rotate(360deg); /* Safari 和 Chrome */
-                -o-transform: rotate(360deg); /* Opera */
-                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-            }
-            .cs {
-                width: 100%;
-                height: 100%;
-                margin: 0 auto;
-                position: absolute;
-                text-align: center;
-            }
-            .text {
-                position: fixed;
-                bottom: 20px;
-                text-align: center;
-                width: 100%;
-                font-weight: bold;
-            }
-            .text-right {
-                position: fixed;
-                bottom: 50px;
-                text-align: right;
-                width: 100%;
-                font-weight: bold;
-            }
-            canvas {
-   position: absolute;
-   top: 0;
-   left: 0;
-   z-index: 0;
-}
-        </style>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Cuoi len di</title>
+    <link rel="Shortcut Icon" href="./em.jpg" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html { height: 100%; }
+      body {
+        font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
+        background: #79a8ae; color: #CFEBE4; 
+        font-size: 16px; 
+        line-height: 1.6; 
+        letter-spacing: 1px; 
+        margin: 0; 
+        width: 100% !important;
+      }
+      
+      @media (min-width: 768px) {
+        body {
+          font-size: 18px;
+          line-height: 2;
+          letter-spacing: 1.2px;
+        }
+      }
+      a { color: #ebf7f4; }
+      .body--ready {
+        background: linear-gradient(180deg, rgb(245,222,238) 0%, rgb(235,89,210) 120%);
+      }
+      .text { position: fixed; bottom: 100px; text-align: center; width: 100%; }
+      .canvas { margin: 0 auto; display: block; }
+      img#logo {
+        width: 100px; 
+        background-size: cover; 
+        border-radius: 200px; 
+        box-shadow: 0px 0px 20px rgba(63,81,181,.72);
+        border: 2px solid #00a0ff; 
+        opacity: 1; 
+        margin: 15px auto; 
+        transition: all 1.0s;
+      }
+      
+      @media (min-width: 768px) {
+        img#logo {
+          width: 128px;
+          box-shadow: 0px 0px 40px rgba(63,81,181,.72);
+          border: 3px solid #00a0ff;
+          margin: 20px auto;
+        }
+      }
+      #logo:hover {
+        box-shadow: 0 0 10px #fff; transform: rotate(360deg);
+      }
+      .cs { width: 100%; height: 100%; margin: 0 auto; position: absolute; text-align: center; }
+      .text { 
+        position: fixed; 
+        bottom: 15px; 
+        text-align: center; 
+        width: 100%; 
+        font-weight: bold;
+        font-size: 14px;
+        padding: 0 10px;
+      }
+      
+      @media (min-width: 768px) {
+        .text {
+          bottom: 20px;
+          font-size: 16px;
+        }
+      }
+      .text-right { position: fixed; bottom: 50px; text-align: right; width: 100%; font-weight: bold; }
+
+      /* ====== LOGIN OVERLAY ====== */
+      #login-overlay {
+        position: fixed; inset: 0; z-index: 9999;
+        background: radial-gradient(circle at 30% 20%, #ffe6f4, #ffc1e7, #f59cd8);
+        display: flex; align-items: center; justify-content: center; padding: 16px;
+      }
+      .login-card {
+        width: 90%; 
+        max-width: 520px; 
+        background: #fff; 
+        color: #222; 
+        border-radius: 16px;
+        box-shadow: 0 20px 80px rgba(0,0,0,.15); 
+        padding: 20px 15px;
+        margin: 0 auto;
+      }
+      
+      @media (min-width: 768px) {
+        .login-card {
+          padding: 20px 24px;
+        }
+      }
+      .login-title {
+        text-align: center; font-weight: 800; letter-spacing: .5px; margin: 6px 0 14px; color: #111;
+      }
+      .login-content { 
+        display: flex; 
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      @media (min-width: 768px) {
+        .login-content {
+          display: grid;
+          grid-template-columns: 120px 1fr;
+        }
+      }
+      .login-avatar {
+        width: 110px; height: 110px; border-radius: 12px; object-fit: cover; border: 2px solid #ffe0f1;
+        box-shadow: 0 6px 18px rgba(255,105,180,.25);
+      }
+      .pin-wrap { display: flex; flex-direction: column; gap: 10px; }
+      .pin-input {
+        height: 44px; border-radius: 10px; border: 2px solid #f0f0f0; outline: none; padding: 0 12px;
+        font-size: 18px; text-align: center; letter-spacing: .4em; background: #fafafa;
+      }
+      .keypad {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      }
+      .keypad button {
+        height: 40px; 
+        border: 0; 
+        border-radius: 10px; 
+        background: #fff; 
+        box-shadow: 0 4px 10px rgba(0,0,0,.06);
+        font-weight: 700; 
+        font-size: 14px; 
+        cursor: pointer; 
+        transition: transform .05s;
+      }
+      
+      @media (min-width: 768px) {
+        .keypad button {
+          height: 46px;
+          font-size: 16px;
+        }
+      }
+      .keypad button:active { transform: scale(.97); }
+      .keypad .ok { background: #18c964; color: #fff; }
+      .keypad .clear { background: #ff4d6d; color: #fff; }
+      .keypad .back { background: #e9eef5; color: #111; }
+      .hint { font-size: 12px; color: #666; text-align: center; margin-top: 8px; min-height: 18px; }
+      .error { color: #ff3b30; }
+      .hidden { display: none !important; }
+      @keyframes shake {
+        10%, 90% { transform: translateX(-2px); }
+        20%, 80% { transform: translateX(4px); }
+        30%, 50%, 70% { transform: translateX(-8px); }
+        40%, 60% { transform: translateX(8px); }
+      }
+      .shake { animation: shake .35s linear; }
+
+      canvas { position: absolute; top: 0; left: 0; z-index: 0; }
+      
+      /* Hide main content initially */
+      .main-content { display: none; }
+      .main-content.active { display: block; }
+    </style>
+  </head>
+<div id="vutru-overlay" style="display:none; position:fixed; inset:0; z-index:9998; background:#0b0015;">
+  <div style="position:absolute; top:12px; left:12px; z-index:2; display:flex; gap:8px;">
     
-    </head>
-    
-    <body>
-        <canvas id="rainCanvas"></canvas>
-    <div class="cs">
-        <img src="./teu.jpg" id="logo">
+  </div>
+  <iframe id="vutru-frame" src="about:blank" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="fullscreen"></iframe>
+</div>
+  <body>
+    <!-- ====== LOGIN OVERLAY ====== -->
+    <div id="login-overlay">
+      <div class="login-card" id="login-card">
+        <h2 class="login-title">NHẬP PASS ĐI NGƯỜI ĐẸP</h2>
+        <div class="login-content">
+          <img src="./em.jpg" alt="avatar" class="login-avatar" />
+          <div class="pin-wrap">
+            <input id="pin" class="pin-input" type="password" maxlength="8" placeholder="●●●●●●●●" readonly />
+            <div class="keypad" id="keypad">
+              <!-- hàng 1 -->
+              <button data-key="1">1</button>
+              <button data-key="2">2</button>
+              <button data-key="3">3</button>
+              <!-- hàng 2 -->
+              <button data-key="4">4</button>
+              <button data-key="5">5</button>
+              <button data-key="6">6</button>
+              <!-- hàng 3 -->
+              <button data-key="7">7</button>
+              <button data-key="8">8</button>
+              <button data-key="9">9</button>
+              <!-- hàng 4 -->
+              <button class="ok" id="okBtn">✓</button>
+              <button data-key="0">0</button>
+              <button class="back" id="backBtn">⌫</button>
+              <!-- hàng 5 -->
+              <button class="clear" id="clearBtn" style="grid-column: span 3;">Xóa hết</button>
+            </div>
+            <div id="loginHint" class="hint">Gõ bằng bàn phím cũng được. Enter = ✓</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <canvas class="canvas" width="1820" height="905"></canvas>
-    <p class="text" style="color: #ed3073;">Đã đươc
-    <span id="span_dt_dt"></span><br> quen nhau rùi đấy😘
-    </p>
+    <!-- ====== /LOGIN OVERLAY ====== -->
+
+    <!-- ====== MAIN CONTENT ====== -->
+    <div id="main-content" class="main-content">
+      <canvas id="rainCanvas"></canvas>
+      <div class="cs"><img src="./em.jpg" id="logo" /></div>
+      <canvas style="width: 100% !important;" class="canvas" width="1820" height="905"></canvas>
+      <p class="text" style="color: #ed3073;">
+        Đã đươc <span id="span_dt_dt"></span><br /> quen nhau rùi đấy😘
+      </p>
+      
+      <!-- Galaxy Animation Container -->
+      <div id="galaxy-container" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+      
+      <!-- Link to Universe Page -->
+      <a id="universe-link" href="vutru.html" style="display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:100px; z-index:10; background:#ff4d6d; color:white; border:none; padding:10px 15px; border-radius:20px; cursor:pointer; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.2); text-decoration:none;">
+        Quà nè 🎁
+      </a>
+    </div>
+
+    <div>
+      <!-- đảm bảo audio dùng chung src -->
+<audio id="bgmusic" preload="auto" playsinline loop>
+  <source src="./happybirthday.mp3" type="audio/mpeg" />
+</audio>
+
+    </div>
+
     <script>
-        const canvas = document.getElementById('rainCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+      /* ===== Rain background behind everything ===== */
+      const canvas = document.getElementById('rainCanvas');
+      const ctx = canvas.getContext('2d');
+      function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+      const letters='I LOVE U'.split(''); const fontSize=16; let columns=Math.floor(window.innerWidth/fontSize);
+      const drops=Array(columns).fill(1);
+      function drawRainBackground(){
+        ctx.fillStyle='rgba(0,0,0,0.05)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle='#f584b7'; ctx.font=fontSize+'px arial';
+        for(let i=0;i<drops.length;i++){
+          const text=letters[Math.floor(Math.random()*letters.length)];
+          ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+          if(drops[i]*fontSize>canvas.height||Math.random()>0.95) drops[i]=0; drops[i]++;
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+      }
+      
+      /* ===== Counter ===== */
+      function show_date_time() {
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay = new Date("04/01/2025 08:30:00");
+        today = new Date();
+        timeold = (today.getTime() - BirthDay.getTime());
+        sectimeold = timeold / 1000;
+        secondsold = Math.floor(sectimeold);
+        msPerDay = 24 * 60 * 60 * 1000;
+        e_daysold = timeold / msPerDay;
+        daysold = Math.floor(e_daysold);
+        e_hrsold = (e_daysold - daysold) * 24;
+        hrsold = Math.floor(e_hrsold);
+        e_minsold = (e_hrsold - hrsold) * 60;
+        minsold = Math.floor((e_hrsold - hrsold) * 60);
+        seconds = Math.floor((e_minsold - minsold) * 60);
+        span_dt_dt.innerHTML = daysold + " Ngày " + hrsold + " Giờ " + minsold + " Phút " + seconds + " Giây ";
+      }
 
-        const letters = 'I LOVE U'.split('');
-        const fontSize = 16;
-        let columns = Math.floor(window.innerWidth / fontSize);
-        const drops = Array(columns).fill(1);
-
-        function drawRainBackground() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#f584b7';
-            ctx.font = fontSize + 'px arial';
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) drops[i] = 0;
-                drops[i]++;
-            }
+      /* ===== DOTS ANIMATION ===== */
+      var S = {
+        init: function () {
+          S.Drawing.init('.canvas');
+          document.body.classList.add('body--ready');
+          S.UI.simulate("Chúc mừng|sinh nhật|bạn yêu|🎂|#countdown 3|Chúc cậu|mãi là|một bông hồng|đẹp nhất|30.08.2000|❤️");
+          S.Drawing.loop(function () { S.Shape.render(); });
         }
+      };
+      S.Drawing=(function(){var canvas,context,renderFn,requestFrame=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(cb){window.setTimeout(cb,1000/60);};return{init:function(el){canvas=document.querySelector(el);context=canvas.getContext('2d');this.adjustCanvas();window.addEventListener('resize',function(){S.Drawing.adjustCanvas();});},loop:function(fn){renderFn=!renderFn?fn:renderFn;this.clearFrame();renderFn();requestFrame.call(window,this.loop.bind(this));},adjustCanvas:function(){canvas.width=window.innerWidth-100;canvas.height=window.innerHeight-30;},clearFrame:function(){context.clearRect(0,0,canvas.width,canvas.height);},getArea:function(){return{w:canvas.width,h:canvas.height};},drawCircle:function(p,c){context.fillStyle=c.render();context.beginPath();context.arc(p.x,p.y,p.z,0,2*Math.PI,true);context.closePath();context.fill();}};}());
+      S.UI=(function(){var interval,currentAction,time,maxShapeSize=30,sequence=[],cmd='#';function formatTime(date){var h=date.getHours(),m=date.getMinutes();m=m<10?'0'+m:m;return h+':'+m;}function getValue(value){return value&&value.split(' ')[1];}function getAction(value){value=value&&value.split(' ')[0];return value&&value[0]===cmd&&value.substring(1);}function timedAction(fn,delay,max,reverse){clearInterval(interval);currentAction=reverse?max:1;fn(currentAction);if(!max||(!reverse&&currentAction<max)||(reverse&&currentAction>0)){interval=setInterval(function(){currentAction=reverse?currentAction-1:currentAction+1;fn(currentAction);if((!reverse&&max&&currentAction===max)||(reverse&&currentAction===0)){clearInterval(interval);}},delay);}}function performAction(value){var action,value,current;sequence=typeof(value)==='object'?value:sequence.concat(value.split('|'));timedAction(function(index){current=sequence.shift();action=getAction(current);value=getValue(current);switch(action){case'countdown':value=parseInt(value)||10;value=value>0?value:10;timedAction(function(index){if(index===0){if(sequence.length===0){S.Shape.switchShape(S.ShapeBuilder.letter(''));}else{performAction(sequence);}}else{S.Shape.switchShape(S.ShapeBuilder.letter(index),true);}},1000,value,true);break;case'rectangle':value=value&&value.split('x');value=(value&&value.length===2)?value:[maxShapeSize,maxShapeSize/2];S.Shape.switchShape(S.ShapeBuilder.rectangle(Math.min(maxShapeSize,parseInt(value[0])),Math.min(maxShapeSize,parseInt(value[1]))));break;case'circle':value=parseInt(value)||maxShapeSize;value=Math.min(value,maxShapeSize);S.Shape.switchShape(S.ShapeBuilder.circle(value));break;case'time':var t=formatTime(new Date());if(sequence.length>0){S.Shape.switchShape(S.ShapeBuilder.letter(t));}else{timedAction(function(){t=formatTime(new Date());if(t!==time){time=t;S.Shape.switchShape(S.ShapeBuilder.letter(time));}},1000);}break;default:S.Shape.switchShape(S.ShapeBuilder.letter(current[0]===cmd?'HacPai':current));if(current === '❤️') {document.getElementById('universe-link').style.display = 'block';}}},2000,sequence.length);}return{simulate:function(action){performAction(action);}};}());
+      S.Point=function(args){this.x=args.x;this.y=args.y;this.z=args.z;this.a=args.a;this.h=args.h;};
+      S.Color=function(r,g,b,a){this.r=r;this.g=g;this.b=b;this.a=a;};
+      S.Color.prototype={render:function(){return'rgba('+this.r+','+ +this.g+','+this.b+','+this.a+')';}};
+      S.Dot=function(x,y){this.p=new S.Point({x:x,y:y,z:5,a:1,h:0});this.e=.07;this.s=true;this.c=new S.Color(255,255,255,this.p.a);this.t=this.clone();this.q=[];};
+      S.Dot.prototype={clone:function(){return new S.Point({x:this.x,y:this.y,z:this.z,a:this.a,h:this.h});},_draw:function(){this.c.a=this.p.a;S.Drawing.drawCircle(this.p,this.c);},_moveTowards:function(n){var details=this.distanceTo(n,true),dx=details[0],dy=details[1],d=details[2],e=this.e*d;if(this.p.h===-1){this.p.x=n.x;this.p.y=n.y;return true;}if(d>1){this.p.x-=((dx/d)*e);this.p.y-=((dy/d)*e);}else{if(this.p.h>0){this.p.h--;}else{return true;}}return false;},_update:function(){if(this._moveTowards(this.t)){var p=this.q.shift();if(p){this.t.x=p.x||this.p.x;this.t.y=p.y||this.p.y;this.t.z=p.z||this.p.z;this.t.a=p.a||this.p.a;this.p.h=p.h||0;}else{if(this.s){this.p.x-=Math.sin(Math.random()*3.142);this.p.y-=Math.sin(Math.random()*3.142);}else{this.move(new S.Point({x:this.p.x+(Math.random()*50)-25,y:this.p.y+(Math.random()*50)-25}));}}}d=this.p.a-this.t.a;this.p.a=Math.max(.1,this.p.a-(d*.05));d=this.p.z-this.t.z;this.p.z=Math.max(1,this.p.z-(d*.05));},distanceTo:function(n,details){var dx=this.p.x-n.x,dy=this.p.y-n.y,d=Math.sqrt(dx*dx+dy*dy);return details?[dx,dy,d]:d;},move:function(p,avoidStatic){if(!avoidStatic||(avoidStatic&&this.distanceTo(p)>1)){this.q.push(p);}},render:function(){this._update();this._draw();}};
+      S.ShapeBuilder=(function(){var gap=13,shapeCanvas=document.createElement('canvas'),shapeContext=shapeCanvas.getContext('2d'),fontSize=500,fontFamily='Avenir, Helvetica Neue, Helvetica, Arial, sans-serif';function fit(){shapeCanvas.width=Math.floor(window.innerWidth/gap)*gap;shapeCanvas.height=Math.floor(window.innerHeight/gap)*gap;shapeContext.fillStyle='red';shapeContext.textBaseline='middle';shapeContext.textAlign='center';}function processCanvas(){var pixels=shapeContext.getImageData(0,0,shapeCanvas.width,shapeCanvas.height).data;dots=[],pixels,x=0,y=0,fx=shapeCanvas.width,fy=shapeCanvas.height,w=0,h=0;for(var p=0;p<pixels.length;p+=(4*gap)){if(pixels[p+3]>0){dots.push(new S.Point({x:x,y:y}));w=x>w?x:w;h=y>h?y:h;fx=x<fx?x:fx;fy=y<fy?y:fy;}x+=gap;if(x>=shapeCanvas.width){x=0;y+=gap;p+=gap*4*shapeCanvas.width;}}return{dots:dots,w:w+fx,h:h+fy};}function setFontSize(s){shapeContext.font='bold '+s+'px '+fontFamily;}function isNumber(n){return!isNaN(parseFloat(n))&&isFinite(n);}function init(){fit();window.addEventListener('resize',fit);}init();return{imageFile:function(url,callback){var image=new Image(),a=S.Drawing.getArea();image.onload=function(){shapeContext.clearRect(0,0,shapeCanvas.width,shapeCanvas.height);shapeContext.drawImage(this,0,0,a.h*.6,a.h*.6);callback(processCanvas());};image.onerror=function(){callback(S.ShapeBuilder.letter('What?'));};image.src=url;},circle:function(d){var r=Math.max(0,d)/2;shapeContext.clearRect(0,0,shapeCanvas.width,shapeCanvas.height);shapeContext.beginPath();shapeContext.arc(r*gap,r*gap,r*gap,0,2*Math.PI,false);shapeContext.fill();shapeContext.closePath();return processCanvas();},letter:function(l){var s=0;setFontSize(fontSize);s=Math.min(fontSize,(shapeCanvas.width/shapeContext.measureText(l).width)*.8*fontSize,(shapeCanvas.height/fontSize)*(isNumber(l)?1:.45)*fontSize);setFontSize(s);shapeContext.clearRect(0,0,shapeCanvas.width,shapeCanvas.height);shapeContext.fillText(l,shapeCanvas.width/2,shapeCanvas.height/2);return processCanvas();},rectangle:function(w,h){var dots=[],width=gap*w,height=gap*h;for(var y=0;y<height;y+=gap){for(var x=0;x<width;x+=gap){dots.push(new S.Point({x:x,y:y}));}}return{dots:dots,w:width,h:height};}}}());
+      S.Shape=(function(){var dots=[],width=0,height=0,cx=0,cy=0;function compensate(){var a=S.Drawing.getArea();cx=a.w/2-width/2;cy=a.h/2-height/2;}return{shuffleIdle:function(){var a=S.Drawing.getArea();for(var d=0;d<dots.length;d++){if(!dots[d].s){dots[d].move({x:Math.random()*a.w,y:Math.random()*a.h});}}},switchShape:function(n,fast){var size,a=S.Drawing.getArea();width=n.w;height=n.h;compensate();if(n.dots.length>dots.length){size=n.dots.length-dots.length;for(var d=1;d<=size;d++){dots.push(new S.Dot(a.w/2,a.h/2));}}var d=0,i=0;while(n.dots.length>0){i=Math.floor(Math.random()*n.dots.length);dots[d].e=fast?.25:(dots[d].s?.14:.11);if(dots[d].s){dots[d].move(new S.Point({z:Math.random()*20+10,a:Math.random(),h:18}));}else{dots[d].move(new S.Point({z:Math.random()*5+5,h:fast?18:30}));}dots[d].s=true;dots[d].move(new S.Point({x:n.dots[i].x+cx,y:n.dots[i].y+cy,a:1,z:5,h:0}));n.dots=n.dots.slice(0,i).concat(n.dots.slice(i+1));d++;}for(var i=d;i<dots.length;i++){if(dots[i].s){dots[i].move(new S.Point({z:Math.random()*20+10,a:Math.random(),h:20}));dots[i].s=false;dots[i].e=.04;dots[i].move(new S.Point({x:Math.random()*a.w,y:Math.random()*a.h,a:.3,z:Math.random()*4,h:0}));}}},render:function(){for(var d=0;d<dots.length;d++){dots[d].render();}}};}());
 
-        setInterval(drawRainBackground, 50);
-</script>
-    <script language="javascript">
-        function show_date_time() {
-            window.setTimeout("show_date_time()", 1000);
-            BirthDay = new Date("04/01/2025 08:30:00");
-            today = new Date();
-            timeold = (today.getTime() - BirthDay.getTime());
-            sectimeold = timeold / 1000
-            secondsold = Math.floor(sectimeold);
-            msPerDay = 24 * 60 * 60 * 1000
-            e_daysold = timeold / msPerDay
-            daysold = Math.floor(e_daysold);
-            e_hrsold = (e_daysold - daysold) * 24;
-            hrsold = Math.floor(e_hrsold);
-            e_minsold = (e_hrsold - hrsold) * 60;
-            minsold = Math.floor((e_hrsold - hrsold) * 60);
-            seconds = Math.floor((e_minsold - minsold) * 60);
-            span_dt_dt.innerHTML = daysold + " Ngày " + hrsold + " Giờ " + minsold + " Phút " + seconds + " Giây ";
-        }
-        show_date_time();
+      /* ===== LOGIN SCRIPT ===== */
+      (function () {
+    const PASS = "30082000";
+    const overlay = document.getElementById('login-overlay');
+    const card = document.getElementById('login-card');
+    const pin = document.getElementById('pin');
+    const keypad = document.getElementById('keypad');
+    const okBtn = document.getElementById('okBtn');
+    const backBtn = document.getElementById('backBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const hint = document.getElementById('loginHint');
+    const audio = document.getElementById('bgmusic');
+    const mainContent = document.getElementById('main-content');
+    let audioUnlocked = false;
+
+    function setMsg(msg, isErr=false){
+      hint.textContent = msg || ""; 
+      hint.classList.toggle('error', !!isErr);
+    }
+
+    // Fade-in audio
+    function fadeInAudio(targetVol = 0.6, step = 0.05, everyMs = 120) {
+      try { audio.muted = false; audio.volume = 0; } catch(e) {}
+      const iv = setInterval(() => {
+        try {
+          if (audio.volume + step >= targetVol) {
+            audio.volume = targetVol;
+            clearInterval(iv);
+          } else {
+            audio.volume = Math.min(1, audio.volume + step);
+          }
+        } catch(e) { clearInterval(iv); }
+      }, everyMs);
+    }
+
+    async function tryPlayAudio() {
+      if (!audio) return;
+      try {
+        audio.muted = false;
+        await audio.play();
+        fadeInAudio();
+        audioUnlocked = true;
+      } catch (e) {
+        audioUnlocked = false;
+      }
+    }
+
+    function attachOneTimeUnlock() {
+      const once = async () => {
+        if (!audioUnlocked) await tryPlayAudio();
+      };
+      window.addEventListener('pointerdown', once, { once: true });
+      window.addEventListener('keydown', once, { once: true });
+    }
+
+    function startMainContent() {
+      mainContent.classList.add('active');
+      setInterval(drawRainBackground, 50);
+      show_date_time();
+      S.init();
+
+      tryPlayAudio();
+      attachOneTimeUnlock();
+
+      // galaxy animation như cũ ...
+      setTimeout(() => {
+        const galaxyContainer = document.getElementById('galaxy-container');
+        galaxyContainer.style.display = 'block';
+        // giữ nguyên phần THREE.js bạn đã có
+      }, 1000);
+    }
+
+    function check(){
+      if (pin.value === PASS) {
+        overlay.classList.add('hidden');
+        tryPlayAudio();
+        startMainContent();
+      } else {
+        setMsg('Sai pass rồi 😜', true);
+        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+      }
+    }
+
+    keypad.addEventListener('click', (e)=>{
+      const k = e.target.getAttribute('data-key');
+      if (k) { if (pin.value.length < 8) pin.value += k; setMsg(''); }
+    });
+    okBtn.addEventListener('click', check);
+    backBtn.addEventListener('click', ()=>{ pin.value = pin.value.slice(0,-1); setMsg(''); });
+    clearBtn.addEventListener('click', ()=>{ pin.value=''; setMsg(''); });
+    window.addEventListener('keydown', (e)=>{
+      if (/^\d$/.test(e.key)) { if (pin.value.length < 8) pin.value += e.key; setMsg(''); }
+      if (e.key === 'Backspace') { pin.value = pin.value.slice(0,-1); }
+      if (e.key === 'Enter') { check(); }
+    });
+  })();
+  const universeLink = document.getElementById('universe-link');
+const vutruOverlay = document.getElementById('vutru-overlay');
+const vutruFrame   = document.getElementById('vutru-frame');
+const vutruBackBtn = document.getElementById('vutru-back');
+if (universeLink && vutruOverlay && vutruFrame) {
+  universeLink.addEventListener('click', (e) => {
+    e.preventDefault();                     // không rời trang
+    // (tuỳ chọn) lưu trạng thái nhạc – không bắt buộc khi dùng iframe
+    try {
+      const t = (!isNaN(audio.currentTime) ? audio.currentTime : 0);
+      const vol = audio ? audio.volume : 0.6;
+      localStorage.setItem('bgm_state', JSON.stringify({ t, vol, ts: Date.now() }));
+    } catch(e){}
+
+    // mở overlay + nạp trang vũ trụ
+    vutruOverlay.style.display = 'block';
+    // nạp thực sự (mới) chỉ khi chưa nạp hoặc đã đóng trước đó
+    if (!vutruFrame.src || /about:blank/.test(vutruFrame.src)) {
+      vutruFrame.src = 'vutru.html';
+    }
+    // NHẠC Ở PARENT VẪN CHẠY – KHÔNG ĐỤNG audio.play() Ở ĐÂY
+  });
+}
+
+if (vutruBackBtn) {
+  vutruBackBtn.addEventListener('click', () => {
+    // dọn iframe để giải phóng tài nguyên 3D rồi đóng overlay
+    try { vutruFrame.src = 'about:blank'; } catch(e){}
+    vutruOverlay.style.display = 'none';
+    // nhạc parent vẫn tiếp tục
+  });
+}
+
+// (tuỳ chọn) hỗ trợ nút Back của trình duyệt đóng overlay
+window.addEventListener('popstate', () => {
+  if (vutruOverlay.style.display === 'block') {
+    try { vutruFrame.src = 'about:blank'; } catch(e){}
+    vutruOverlay.style.display = 'none';
+  }
+});
+// Lưu thời điểm nhạc trước khi rời trang
+if (universeLink) {
+  universeLink.addEventListener('click', () => {
+    try {
+      const t = (audio && !isNaN(audio.currentTime)) ? audio.currentTime : 0;
+      const vol = audio ? audio.volume : 0.6;
+      localStorage.setItem('bgm_state', JSON.stringify({ t, vol, ts: Date.now() }));
+    } catch(e) {}
+  });
+}
     </script>
-    <script>
-        var S = {
-            init: function () {
-                S.Drawing.init('.canvas');
-                document.body.classList.add('body--ready');
-                S.UI.simulate("Chào cậu|Cậu|biết|Gì chưa|#countdown 3|Cậu đã| Mập lên| Rồi đấy|Bất ngờ chưa|Ông già|#time|🖕");
-                S.Drawing.loop(function () {
-                    S.Shape.render();
-                });
-            }
-        };
-        S.Drawing = (function () {
-            var canvas,
-                context,
-                renderFn,
-                requestFrame = window.requestAnimationFrame ||
-                    window.webkitRequestAnimationFrame ||
-                    window.mozRequestAnimationFrame ||
-                    window.oRequestAnimationFrame ||
-                    window.msRequestAnimationFrame ||
-                    function (callback) {
-                        window.setTimeout(callback, 1000 / 60);
-                    };
-            return {
-                init: function (el) {
-                    canvas = document.querySelector(el);
-                    context = canvas.getContext('2d');
-                    this.adjustCanvas();
-                    window.addEventListener('resize', function (e) {
-                        S.Drawing.adjustCanvas();
-                    });
-                },
-                loop: function (fn) {
-                    renderFn = !renderFn ? fn : renderFn;
-                    this.clearFrame();
-                    renderFn();
-                    requestFrame.call(window, this.loop.bind(this));
-                },
-                adjustCanvas: function () {
-                    canvas.width = window.innerWidth - 100;
-                    canvas.height = window.innerHeight - 30;
-                },
-                clearFrame: function () {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                },
-                getArea: function () {
-                    return {w: canvas.width, h: canvas.height};
-                },
-                drawCircle: function (p, c) {
-                    context.fillStyle = c.render();
-                    context.beginPath();
-                    context.arc(p.x, p.y, p.z, 0, 2 * Math.PI, true);
-                    context.closePath();
-                    context.fill();
-                }
-            };
-        }());
-        S.UI = (function () {
-            var interval,
-                currentAction,
-                time,
-                maxShapeSize = 30,
-                sequence = [],
-                cmd = '#';
-            function formatTime(date) {
-                var h = date.getHours(),
-                    m = date.getMinutes(),
-                    m = m < 10 ? '0' + m : m;
-                return h + ':' + m;
-            }
-            function getValue(value) {
-                return value && value.split(' ')[1];
-            }
-            function getAction(value) {
-                value = value && value.split(' ')[0];
-                return value && value[0] === cmd && value.substring(1);
-            }
-            function timedAction(fn, delay, max, reverse) {
-                clearInterval(interval);
-                currentAction = reverse ? max : 1;
-                fn(currentAction);
-                if (!max || (!reverse && currentAction < max) || (reverse && currentAction > 0)) {
-                    interval = setInterval(function () {
-                        currentAction = reverse ? currentAction - 1 : currentAction + 1;
-                        fn(currentAction);
-                        if ((!reverse && max && currentAction === max) || (reverse && currentAction === 0)) {
-                            clearInterval(interval);
-                        }
-                    }, delay);
-                }
-            }
-            function performAction(value) {
-                var action,
-                    value,
-                    current;
-                sequence = typeof (value) === 'object' ? value : sequence.concat(value.split('|'));
-                timedAction(function (index) {
-                    current = sequence.shift();
-                    action = getAction(current);
-                    value = getValue(current);
-                    switch (action) {
-                        case 'countdown':
-                            value = parseInt(value) || 10;
-                            value = value > 0 ? value : 10;
-                            timedAction(function (index) {
-                                if (index === 0) {
-                                    if (sequence.length === 0) {
-                                        S.Shape.switchShape(S.ShapeBuilder.letter(''));
-                                    } else {
-                                        performAction(sequence);
-                                    }
-                                } else {
-                                    S.Shape.switchShape(S.ShapeBuilder.letter(index), true);
-                                }
-                            }, 1000, value, true);
-                            break;
-                        case 'rectangle':
-                            value = value && value.split('x');
-                            value = (value && value.length === 2) ? value : [maxShapeSize, maxShapeSize / 2];
-                            S.Shape.switchShape(S.ShapeBuilder.rectangle(Math.min(maxShapeSize, parseInt(value[0])), Math.min(maxShapeSize, parseInt(value[1]))));
-                            break;
-                        case 'circle':
-                            value = parseInt(value) || maxShapeSize;
-                            value = Math.min(value, maxShapeSize);
-                            S.Shape.switchShape(S.ShapeBuilder.circle(value));
-                            break;
-                        case 'time':
-                            var t = formatTime(new Date());
-                            if (sequence.length > 0) {
-                                S.Shape.switchShape(S.ShapeBuilder.letter(t));
-                            } else {
-                                timedAction(function () {
-                                    t = formatTime(new Date());
-                                    if (t !== time) {
-                                        time = t;
-                                        S.Shape.switchShape(S.ShapeBuilder.letter(time));
-                                    }
-                                }, 1000);
-                            }
-                            break;
-                        default:
-                            S.Shape.switchShape(S.ShapeBuilder.letter(current[0] === cmd ? 'HacPai' : current));
-                    }
-                }, 2000, sequence.length);
-            }
-            return {
-                simulate: function (action) {
-                    performAction(action);
-                }
-            };
-        }());
-        S.Point = function (args) {
-            this.x = args.x;
-            this.y = args.y;
-            this.z = args.z;
-            this.a = args.a;
-            this.h = args.h;
-        };
-        S.Color = function (r, g, b, a) {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            this.a = a;
-        };
-        S.Color.prototype = {
-            render: function () {
-                return 'rgba(' + this.r + ',' + +this.g + ',' + this.b + ',' + this.a + ')';
-            }
-        };
-        S.Dot = function (x, y) {
-            this.p = new S.Point({
-                x: x,
-                y: y,
-                z: 5,
-                a: 1,
-                h: 0
-            });
-            this.e = 0.07;
-            this.s = true;
-            this.c = new S.Color(255, 255, 255, this.p.a);
-            this.t = this.clone();
-            this.q = [];
-        };
-        S.Dot.prototype = {
-            clone: function () {
-                return new S.Point({
-                    x: this.x,
-                    y: this.y,
-                    z: this.z,
-                    a: this.a,
-                    h: this.h
-                });
-            },
-            _draw: function () {
-                this.c.a = this.p.a;
-                S.Drawing.drawCircle(this.p, this.c);
-            },
-            _moveTowards: function (n) {
-                var details = this.distanceTo(n, true),
-                    dx = details[0],
-                    dy = details[1],
-                    d = details[2],
-                    e = this.e * d;
-                if (this.p.h === -1) {
-                    this.p.x = n.x;
-                    this.p.y = n.y;
-                    return true;
-                }
-                if (d > 1) {
-                    this.p.x -= ((dx / d) * e);
-                    this.p.y -= ((dy / d) * e);
-                } else {
-                    if (this.p.h > 0) {
-                        this.p.h--;
-                    } else {
-                        return true;
-                    }
-                }
-                return false;
-            },
-            _update: function () {
-                if (this._moveTowards(this.t)) {
-                    var p = this.q.shift();
-                    if (p) {
-                        this.t.x = p.x || this.p.x;
-                        this.t.y = p.y || this.p.y;
-                        this.t.z = p.z || this.p.z;
-                        this.t.a = p.a || this.p.a;
-                        this.p.h = p.h || 0;
-                    } else {
-                        if (this.s) {
-                            this.p.x -= Math.sin(Math.random() * 3.142);
-                            this.p.y -= Math.sin(Math.random() * 3.142);
-                        } else {
-                            this.move(new S.Point({
-                                x: this.p.x + (Math.random() * 50) - 25,
-                                y: this.p.y + (Math.random() * 50) - 25
-                            }));
-                        }
-                    }
-                }
-                d = this.p.a - this.t.a;
-                this.p.a = Math.max(0.1, this.p.a - (d * 0.05));
-                d = this.p.z - this.t.z;
-                this.p.z = Math.max(1, this.p.z - (d * 0.05));
-            },
-            distanceTo: function (n, details) {
-                var dx = this.p.x - n.x,
-                    dy = this.p.y - n.y,
-                    d = Math.sqrt(dx * dx + dy * dy);
-                return details ? [dx, dy, d] : d;
-            },
-            move: function (p, avoidStatic) {
-                if (!avoidStatic || (avoidStatic && this.distanceTo(p) > 1)) {
-                    this.q.push(p);
-                }
-            },
-            render: function () {
-                this._update();
-                this._draw();
-            }
-        };
-        S.ShapeBuilder = (function () {
-            var gap = 13,
-                shapeCanvas = document.createElement('canvas'),
-                shapeContext = shapeCanvas.getContext('2d'),
-                fontSize = 500,
-                fontFamily = 'Avenir, Helvetica Neue, Helvetica, Arial, sans-serif';
-            function fit() {
-                shapeCanvas.width = Math.floor(window.innerWidth / gap) * gap;
-                shapeCanvas.height = Math.floor(window.innerHeight / gap) * gap;
-                shapeContext.fillStyle = 'red';
-                shapeContext.textBaseline = 'middle';
-                shapeContext.textAlign = 'center';
-            }
-            function processCanvas() {
-                var pixels = shapeContext.getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data;
-                dots = [],
-                    pixels,
-                    x = 0,
-                    y = 0,
-                    fx = shapeCanvas.width,
-                    fy = shapeCanvas.height,
-                    w = 0,
-                    h = 0;
-                for (var p = 0; p < pixels.length; p += (4 * gap)) {
-                    if (pixels[p + 3] > 0) {
-                        dots.push(new S.Point({
-                            x: x,
-                            y: y
-                        }));
-                        w = x > w ? x : w;
-                        h = y > h ? y : h;
-                        fx = x < fx ? x : fx;
-                        fy = y < fy ? y : fy;
-                    }
-                    x += gap;
-                    if (x >= shapeCanvas.width) {
-                        x = 0;
-                        y += gap;
-                        p += gap * 4 * shapeCanvas.width;
-                    }
-                }
-                return {dots: dots, w: w + fx, h: h + fy};
-            }
-            function setFontSize(s) {
-                shapeContext.font = 'bold ' + s + 'px ' + fontFamily;
-            }
-            function isNumber(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-            function init() {
-                fit();
-                window.addEventListener('resize', fit);
-            }
-            // Init
-            init();
-            return {
-                imageFile: function (url, callback) {
-                    var image = new Image(),
-                        a = S.Drawing.getArea();
-                    image.onload = function () {
-                        shapeContext.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
-                        shapeContext.drawImage(this, 0, 0, a.h * 0.6, a.h * 0.6);
-                        callback(processCanvas());
-                    };
-                    image.onerror = function () {
-                        callback(S.ShapeBuilder.letter('What?'));
-                    };
-                    image.src = url;
-                },
-                circle: function (d) {
-                    var r = Math.max(0, d) / 2;
-                    shapeContext.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
-                    shapeContext.beginPath();
-                    shapeContext.arc(r * gap, r * gap, r * gap, 0, 2 * Math.PI, false);
-                    shapeContext.fill();
-                    shapeContext.closePath();
-                    return processCanvas();
-                },
-                letter: function (l) {
-                    var s = 0;
-                    setFontSize(fontSize);
-                    s = Math.min(fontSize,
-                        (shapeCanvas.width / shapeContext.measureText(l).width) * 0.8 * fontSize,
-                        (shapeCanvas.height / fontSize) * (isNumber(l) ? 1 : 0.45) * fontSize);
-                    setFontSize(s);
-                    shapeContext.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
-                    shapeContext.fillText(l, shapeCanvas.width / 2, shapeCanvas.height / 2);
-                    return processCanvas();
-                },
-                rectangle: function (w, h) {
-                    var dots = [],
-                        width = gap * w,
-                        height = gap * h;
-                    for (var y = 0; y < height; y += gap) {
-                        for (var x = 0; x < width; x += gap) {
-                            dots.push(new S.Point({
-                                x: x,
-                                y: y
-                            }));
-                        }
-                    }
-                    return {dots: dots, w: width, h: height};
-                }
-            };
-        }());
-        S.Shape = (function () {
-            var dots = [],
-                width = 0,
-                height = 0,
-                cx = 0,
-                cy = 0;
-            function compensate() {
-                var a = S.Drawing.getArea();
-                cx = a.w / 2 - width / 2;
-                cy = a.h / 2 - height / 2;
-            }
-            return {
-                shuffleIdle: function () {
-                    var a = S.Drawing.getArea();
-                    for (var d = 0; d < dots.length; d++) {
-                        if (!dots[d].s) {
-                            dots[d].move({
-                                x: Math.random() * a.w,
-                                y: Math.random() * a.h
-                            });
-                        }
-                    }
-                },
-                switchShape: function (n, fast) {
-                    var size,
-                        a = S.Drawing.getArea();
-                    width = n.w;
-                    height = n.h;
-                    compensate();
-                    if (n.dots.length > dots.length) {
-                        size = n.dots.length - dots.length;
-                        for (var d = 1; d <= size; d++) {
-                            dots.push(new S.Dot(a.w / 2, a.h / 2));
-                        }
-                    }
-                    var d = 0,
-                        i = 0;
-                    while (n.dots.length > 0) {
-                        i = Math.floor(Math.random() * n.dots.length);
-                        dots[d].e = fast ? 0.25 : (dots[d].s ? 0.14 : 0.11);
-                        if (dots[d].s) {
-                            dots[d].move(new S.Point({
-                                z: Math.random() * 20 + 10,
-                                a: Math.random(),
-                                h: 18
-                            }));
-                        } else {
-                            dots[d].move(new S.Point({
-                                z: Math.random() * 5 + 5,
-                                h: fast ? 18 : 30
-                            }));
-                        }
-                        dots[d].s = true;
-                        dots[d].move(new S.Point({
-                            x: n.dots[i].x + cx,
-                            y: n.dots[i].y + cy,
-                            a: 1,
-                            z: 5,
-                            h: 0
-                        }));
-                        n.dots = n.dots.slice(0, i).concat(n.dots.slice(i + 1));
-                        d++;
-                    }
-                    for (var i = d; i < dots.length; i++) {
-                        if (dots[i].s) {
-                            dots[i].move(new S.Point({
-                                z: Math.random() * 20 + 10,
-                                a: Math.random(),
-                                h: 20
-                            }));
-                            dots[i].s = false;
-                            dots[i].e = 0.04;
-                            dots[i].move(new S.Point({
-                                x: Math.random() * a.w,
-                                y: Math.random() * a.h,
-                                a: 0.3, //.4
-                                z: Math.random() * 4,
-                                h: 0
-                            }));
-                        }
-                    }
-                },
-                render: function () {
-                    for (var d = 0; d < dots.length; d++) {
-                        dots[d].render();
-                    }
-                }
-            };
-        }());
-        S.init();
-    </script>
-    <dev>
-        <audio autoplay>
-            <source src="https://play.imusicvn.com/stream/Mgbb1byycZvy" type="audio/mpeg">
-        </audio>
-    </dev>
-
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-</body>
+  </body>
 </html>
